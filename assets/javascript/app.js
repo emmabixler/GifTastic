@@ -17,4 +17,21 @@ $("button").on("click", function() {
     "https://api.giphy.com/v1/gifs/search?q=" +
     space +
     "&api_key=UMubgLO5ShhuaMB3twPsPk6tgGw46IN7";
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    var results = response.data;
+    console.log(results);
+    for (var i = 0; i < results.length; i++) {
+      var spaceDiv = $("<div>");
+      var p = $("<p>").text("Rating: " + results[i].rating);
+      var spaceImage = $("<img>");
+      spaceImage.attr("src", results[i].images.fixed_height.url);
+      spaceDiv.append(p);
+      spaceDiv.append(spaceImage);
+      $("#gifs").prepend(spaceDiv);
+    }
+  });
+ 
 });
