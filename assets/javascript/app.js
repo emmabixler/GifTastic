@@ -29,6 +29,9 @@ $(".search-button").on("click", function() {
       var spaceImage = $("<img>");
       spaceImage.attr("id", "div" + i);
       spaceImage.attr("src", results[i].images.fixed_height_still.url);
+      spaceImage.addClass("image");
+      spaceImage.attr("still-image", results[i].images.fixed_height_still.url);
+      spaceImage.attr("annimate-image", results[i].images.fixed_height.url);
       spaceDiv.append(p);
       spaceDiv.append(spaceImage);
       $(".results-gif").prepend(spaceDiv);
@@ -39,7 +42,7 @@ $(".search-button").on("click", function() {
 $(".add-gif").on("click", function(e) {
   e.preventDefault();
   //stopping the default action
-  var value = $(".add-gif").val();
+  var value = $("#gif-input").val();
 
   console.log(value);
   console.log("clicked");
@@ -60,9 +63,25 @@ $(".add-gif").on("click", function(e) {
       var p = $("<p>").text("Rating" + results[i].rating);
       var spaceImage = $("<img>");
       spaceImage.attr("src", results[i].images.fixed_height.url);
+      spaceImage.attr("still-image", results[i].images.fixed_height_still.url);
+      spaceImage.attr("annimate-image", results[i].images.fixed_height.url);
+      spaceImage.addClass("image");
       spaceDiv.append(p);
       spaceDiv.append(spaceImage);
       $(".results-gif").prepend(spaceDiv);
     }
+  });
+});
+$(".add-gif").on("click", function() {
+  console.log("click");
+  var button = $("<button/>");
+  button.addClass("search-button");
+  button.text("cats");
+  $(".line").append(button);
+});
+console.log($(".image"));
+$(".image").forEach(element => {
+  element.click(function() {
+    element.attr("src", element.getAttribute("annimate-image"));
   });
 });
