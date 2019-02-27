@@ -11,7 +11,7 @@ var topics = [
   "spaceship"
 ];
 
-$("button").on("click", function() {
+$(".search-button").on("click", function() {
   var space = $(this).attr("data-space");
   var queryURL =
     "https://api.giphy.com/v1/gifs/search?q=" +
@@ -27,7 +27,8 @@ $("button").on("click", function() {
       var spaceDiv = $("<div>");
       var p = $("<p>").text("Rating" + results[i].rating);
       var spaceImage = $("<img>");
-      spaceImage.attr("src", results[i].images.fixed_height.url);
+      spaceImage.attr("id", "div" + i);
+      spaceImage.attr("src", results[i].images.fixed_height_still.url);
       spaceDiv.append(p);
       spaceDiv.append(spaceImage);
       $(".results-gif").prepend(spaceDiv);
@@ -35,34 +36,33 @@ $("button").on("click", function() {
   });
 });
 
-$("#add-gif").on("click", function() {
-  var input = $("#gif-input").val();
- 
-  $("#gif-input").val(input);
+$(".add-gif").on("click", function(e) {
+  e.preventDefault();
+  //stopping the default action
+  var value = $(".add-gif").val();
 
-  console.log("this is running");
-  console.log(input);
+  console.log(value);
+  console.log("clicked");
 
   var queryURL =
     "https://api.giphy.com/v1/gifs/search?q=" +
-    input +
+    value +
     "&api_key=UMubgLO5ShhuaMB3twPsPk6tgGw46IN7";
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
     var results = response.data;
-    console.log(results);
+    console.log(response);
     for (var i = 0; i < results.length; i++) {
+      console.log("im in the for loop");
       var spaceDiv = $("<div>");
       var p = $("<p>").text("Rating" + results[i].rating);
       var spaceImage = $("<img>");
       spaceImage.attr("src", results[i].images.fixed_height.url);
       spaceDiv.append(p);
       spaceDiv.append(spaceImage);
-      $("#gifs").prepend(spaceDiv);
+      $(".results-gif").prepend(spaceDiv);
     }
   });
 });
-
-
