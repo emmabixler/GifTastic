@@ -25,6 +25,7 @@ $(".search-button").on("click", function() {
     console.log(results);
     for (var i = 0; i < results.length; i++) {
       var spaceDiv = $("<div>");
+      spaceDiv.addClass("identify");
       var p = $("<p>").text("Rating" + results[i].rating);
       var spaceImage = $("<img>");
       spaceImage.attr("id", "div" + i);
@@ -60,6 +61,7 @@ $(".add-gif").on("click", function(e) {
     for (var i = 0; i < results.length; i++) {
       console.log("im in the for loop");
       var spaceDiv = $("<div>");
+      spaceDiv.addClass("identify");
       var p = $("<p>").text("Rating" + results[i].rating);
       var spaceImage = $("<img>");
       spaceImage.attr("src", results[i].images.fixed_height.url);
@@ -79,9 +81,21 @@ $(".add-gif").on("click", function() {
   button.text("cats");
   $(".line").append(button);
 });
-console.log($(".image"));
-$(".image").forEach(element => {
-  element.click(function() {
-    element.attr("src", element.getAttribute("annimate-image"));
+$(document).on("click", ".image", function(e) {
+  var pass = $(e.target).attr("annimate-image");
+  $(this).attr("src", pass);
+  console.log(e.target);
+  console.log(pass);
+});
+$(function() {
+  $(".image").each(function(e) {
+    console.log($(".image"));
+    var src = $(e).attr("src");
+    $(e).onClick(function() {
+      $(this).attr(
+        "src",
+        src.replace("src", results[i].images.fixed_height.url)
+      );
+    });
   });
 });
